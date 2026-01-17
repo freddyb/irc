@@ -64,11 +64,11 @@ impl Decoder for LineCodec {
 
             #[cfg(not(feature = "encoding"))]
             {
-                if let Ok(decodable) = String::from_utf8(line.to_vec()) {
+                /*if let Ok(decodable) = String::from_utf8(line.to_vec()) {
                     // boring
                 } else {
                     println!("Interesting string {:?}", line);
-                }
+                }*/
                 Ok(Some(String::from_utf8_lossy(&line.to_vec()).into_owned()))
 
             }
