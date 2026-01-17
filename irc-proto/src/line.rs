@@ -64,14 +64,13 @@ impl Decoder for LineCodec {
 
             #[cfg(not(feature = "encoding"))]
             {
-                match String::from_utf8(line.to_vec()) {
-                    Ok(data) => Ok(Some(data)),
-                    Err(data) => Err(io::Error::new(
-                        io::ErrorKind::InvalidInput,
-                        &format!("Failed to decode {} as UTF-8.", data)[..],
-                    )
-                    .into()),
+                if let Ok(decodable) = String::from_utf8(line.to_vec()) {
+                    // boring
+                } else {
+                    println!("Interesting string {:?}", line);
                 }
+                Ok(Some(String::from_utf8_lossy(&line.to_vec()).into_owned()))
+
             }
         } else {
             // Set the search start index to the current length since we know that none of the
